@@ -1,0 +1,36 @@
+appId: com.example.shutr
+tags: [v1, smoke]
+---
+# V1 Smoke Test - Core Gallery Features
+
+- launchApp:
+    appId: com.example.shutr
+    clearState: false
+
+# 1. Verify Photos tab loads
+- assertVisible: "Photos"
+
+# 2. Test photo tap opens viewer (tap center photo in first row)
+- tapOn:
+    point: "50%, 28%"
+- assertVisible: "Share"
+- back
+
+# 3. Navigate to Albums tab
+- tapOn: "Albums"
+- assertVisible: "Albums"
+- back
+
+# 4. Navigate to Join tab
+- tapOn: "Join"
+- assertVisible: "Join"
+- back
+
+# 5. Return to Photos and test pull-to-refresh
+- tapOn: "Photos"
+- assertVisible: "Photos"
+- swipe:
+    start: 50%, 30%
+    end: 50%, 80%
+    duration: 1000
+- assertVisible: "Photos"

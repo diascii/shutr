@@ -1,0 +1,390 @@
+{
+  "D:\\Document\\shutr\\android\\app\\build.gradle.kts": {
+    "mtime": 1777455978009.7153,
+    "hash": "8bc57eeadf6a0c14787270b92cad74c2"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java": {
+    "mtime": 1779003694771.9822,
+    "hash": "ac34a3f8e6466c443dfbcde46eca277b"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\kotlin\\com\\example\\shutr\\MainActivity.kt": {
+    "mtime": 1778678876368.6855,
+    "hash": "c7ecca2f74593f927890a89a122b6125"
+  },
+  "D:\\Document\\shutr\\android\\build.gradle.kts": {
+    "mtime": 1777271021869.0361,
+    "hash": "803fe22651fbe96ed401eb0b66a492d1"
+  },
+  "D:\\Document\\shutr\\android\\gradlew": {
+    "mtime": 1777271023719.605,
+    "hash": "7f1cd7eb3f75a1dc85cd37753972a6e2"
+  },
+  "D:\\Document\\shutr\\android\\settings.gradle.kts": {
+    "mtime": 1777271022072.5955,
+    "hash": "f276a44edd917afd836899357fdae60e"
+  },
+  "D:\\Document\\shutr\\ios\\Flutter\\ephemeral\\flutter_lldb_helper.py": {
+    "mtime": 1778679243500.6301,
+    "hash": "98fc75412162af387e2e3461e4e58094"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\AppDelegate.swift": {
+    "mtime": 1770371169657.9404,
+    "hash": "e277c49e98c9f80e9e71c0524a5cb60f"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\GeneratedPluginRegistrant.h": {
+    "mtime": 1777271030569.3137,
+    "hash": "decb9041b5e91a07e66f4664e5dac408"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\GeneratedPluginRegistrant.m": {
+    "mtime": 1779003694853.3242,
+    "hash": "461a095ab068b2de5c8ce2d5ef3d7078"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Runner-Bridging-Header.h": {
+    "mtime": 1770371169674.4585,
+    "hash": "7ad7b5cea096132de13ba526b2b9efbe"
+  },
+  "D:\\Document\\shutr\\ios\\RunnerTests\\RunnerTests.swift": {
+    "mtime": 1777271022590.5576,
+    "hash": "24e5d095048eb86c30423f4e04b6e57b"
+  },
+  "D:\\Document\\shutr\\lib\\main.dart": {
+    "mtime": 1778999749582.1143,
+    "hash": "ef9724b67622d5d01906ae29e23250c7"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\albums_page.dart": {
+    "mtime": 1779007930530.4033,
+    "hash": "de0ba0332bb5303f726841c1a6399574"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\album_detail_page.dart": {
+    "mtime": 1779008795315.1987,
+    "hash": "236537ac910965862218a50316af8c14"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\gallery_screen.dart": {
+    "mtime": 1778996917082.325,
+    "hash": "42762a44da7e2694500b1559a88623ca"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\photo_viewer.dart": {
+    "mtime": 1779010432293.4443,
+    "hash": "089b90e037a35e7c64669cb01839b442"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\recent_page.dart": {
+    "mtime": 1779011732106.1692,
+    "hash": "e06460658ccf923296d56c8dd0ae0315"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\search_page.dart": {
+    "mtime": 1778999906347.231,
+    "hash": "8da8ddf6eb09ab90a2ccde7272c2b281"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\shared_gallery_screen.dart": {
+    "mtime": 1779003711006.1116,
+    "hash": "216426c6023aad34968d66d37681be57"
+  },
+  "D:\\Document\\shutr\\lib\\services\\peer_service.dart": {
+    "mtime": 1778963224025.3472,
+    "hash": "1e180478c6e587c1071f5682ae146f18"
+  },
+  "D:\\Document\\shutr\\lib\\utils\\gallery_utils.dart": {
+    "mtime": 1779003760874.671,
+    "hash": "90a4f3923846d7856096eae9ed564c11"
+  },
+  "D:\\Document\\shutr\\linux\\flutter\\generated_plugin_registrant.cc": {
+    "mtime": 1777274442835.9055,
+    "hash": "c74f5e1a5f32575a4b26f639876ee827"
+  },
+  "D:\\Document\\shutr\\linux\\flutter\\generated_plugin_registrant.h": {
+    "mtime": 1777271030538.0586,
+    "hash": "d295462c9da9f7fef22dc86c34492318"
+  },
+  "D:\\Document\\shutr\\linux\\runner\\main.cc": {
+    "mtime": 1770371169674.4585,
+    "hash": "539395bcd63dba20afed0838d136189f"
+  },
+  "D:\\Document\\shutr\\linux\\runner\\my_application.cc": {
+    "mtime": 1777271022731.1929,
+    "hash": "33c6c3d2e30f8f81d4fd0ae04878be95"
+  },
+  "D:\\Document\\shutr\\linux\\runner\\my_application.h": {
+    "mtime": 1770371169674.4585,
+    "hash": "ffa1a7c0a2ad45a2c14a921596516ff8"
+  },
+  "D:\\Document\\shutr\\macos\\Flutter\\GeneratedPluginRegistrant.swift": {
+    "mtime": 1779003694858.989,
+    "hash": "f23f0158cb20c9abf82f580226020d70"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\AppDelegate.swift": {
+    "mtime": 1770371169694.8777,
+    "hash": "4b52e0b89ebfef9baf45b04548c463d6"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\MainFlutterWindow.swift": {
+    "mtime": 1770371169703.1895,
+    "hash": "93c22dae2d93f3dc1402e121901f582b"
+  },
+  "D:\\Document\\shutr\\macos\\RunnerTests\\RunnerTests.swift": {
+    "mtime": 1777271023154.0918,
+    "hash": "8059f5d27a19c556eeafb49b3f9b7bdd"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\main.dart": {
+    "mtime": 1778963223858.661,
+    "hash": "d1390f1ee22aef77a41e852bf3a770c8"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\albums_page.dart": {
+    "mtime": 1778963223890.8796,
+    "hash": "24a1ff5f2e2b1437e9e3956c745b6f79"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\album_detail_page.dart": {
+    "mtime": 1778963223875.2507,
+    "hash": "e81561f9b3062d9208e8f5574e918aa5"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\gallery_screen.dart": {
+    "mtime": 1778963223892.4749,
+    "hash": "dbe08e7cc0e29d79d047bcc102151def"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\photo_viewer.dart": {
+    "mtime": 1778963223896.4707,
+    "hash": "672f0296baaca0a49e2bc24bb4732016"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\recent_page.dart": {
+    "mtime": 1778963223926.0913,
+    "hash": "5fd03ee494a5a7e71fd908565cd6bd6b"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\search_page.dart": {
+    "mtime": 1778963297247.5278,
+    "hash": "2cb46589a86239705ba5b1eace131dd2"
+  },
+  "D:\\Document\\shutr\\test\\widget_test.dart": {
+    "mtime": 1778443569223.8123,
+    "hash": "72ddfd75e214e4b662801b27bc8e1c0c"
+  },
+  "D:\\Document\\shutr\\windows\\flutter\\generated_plugin_registrant.cc": {
+    "mtime": 1777274442856.9023,
+    "hash": "1248680a71a6534df061128e2e431f41"
+  },
+  "D:\\Document\\shutr\\windows\\flutter\\generated_plugin_registrant.h": {
+    "mtime": 1777271030553.6824,
+    "hash": "0ea33875f9f8e118f9c2ded03e2e2835"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\flutter_window.cpp": {
+    "mtime": 1770371169707.9146,
+    "hash": "2f463f9b7da67a2d692a012f9ea85e0c"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\flutter_window.h": {
+    "mtime": 1770371169707.9146,
+    "hash": "7defcc89d4a26d56e801241d624d48fb"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\main.cpp": {
+    "mtime": 1777271023421.1077,
+    "hash": "323033b8b2597fcc574a162ce9f10200"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\resource.h": {
+    "mtime": 1770371169707.9146,
+    "hash": "1ade5dd15e613479a15e8832ed276f2b"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\utils.cpp": {
+    "mtime": 1770371169707.9146,
+    "hash": "432461b09d862a2f8dadf380ff0e34e5"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\utils.h": {
+    "mtime": 1770371169707.9146,
+    "hash": "fd81e143f5614eb6fd75efe539002853"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\win32_window.cpp": {
+    "mtime": 1770371169707.9146,
+    "hash": "571eb8234dbc2661be03aa5f2a4d2fca"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\win32_window.h": {
+    "mtime": 1770371169707.9146,
+    "hash": "7569387d58711ab975940f4df3b4bcda"
+  },
+  "D:\\Document\\shutr\\AGENTS.md": {
+    "mtime": 1778959352016.7302,
+    "hash": "7e08ee08604a3fc5d396f4b7921de106"
+  },
+  "D:\\Document\\shutr\\analysis_options.yaml": {
+    "mtime": 1777271021822.1638,
+    "hash": "9e65f4b9beebb674c0dc252f70a5c177"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\LaunchImage.imageset\\README.md": {
+    "mtime": 1770371169674.4585,
+    "hash": "f7ee1b402881509d197f34963e569927"
+  },
+  "D:\\Document\\shutr\\linux\\CMakeLists.txt": {
+    "mtime": 1777271022653.0596,
+    "hash": "5fe0f34498665cb6ab52b09096d210fe"
+  },
+  "D:\\Document\\shutr\\linux\\flutter\\CMakeLists.txt": {
+    "mtime": 1770371169674.4585,
+    "hash": "2195470ce31675d31db5a37590d011f6"
+  },
+  "D:\\Document\\shutr\\linux\\runner\\CMakeLists.txt": {
+    "mtime": 1770371169674.4585,
+    "hash": "30cc1614b16214b66c014af09ba699eb"
+  },
+  "D:\\Document\\shutr\\pubspec.yaml": {
+    "mtime": 1779003683205.5122,
+    "hash": "75cfa16c415a54969ccd2445b2ba07bb"
+  },
+  "D:\\Document\\shutr\\README.md": {
+    "mtime": 1779011417856.7314,
+    "hash": "7f91520ff3420e5ca522ca8312a51f2d"
+  },
+  "D:\\Document\\shutr\\test\\tmpl.txt": {
+    "mtime": 1778656321106.4312,
+    "hash": "283ce2359cc1169dfb214cfbac2676a0"
+  },
+  "D:\\Document\\shutr\\web\\index.html": {
+    "mtime": 1777271023264.8552,
+    "hash": "5a4ecf2bf0e1cbbbfa12c30ce9f191ee"
+  },
+  "D:\\Document\\shutr\\windows\\CMakeLists.txt": {
+    "mtime": 1777271023327.3604,
+    "hash": "672300a7a434a2eff606525358f8f905"
+  },
+  "D:\\Document\\shutr\\windows\\flutter\\CMakeLists.txt": {
+    "mtime": 1770371169707.9146,
+    "hash": "bbf66fed5180bd9ae8198b8d7c4a0001"
+  },
+  "D:\\Document\\shutr\\windows\\runner\\CMakeLists.txt": {
+    "mtime": 1770371169707.9146,
+    "hash": "028602ab9754bffe716659ada7590d29"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png": {
+    "mtime": 1770371169640.7693,
+    "hash": "13e9c72ec37fac220397aa819fa1ef2d"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png": {
+    "mtime": 1770371169641.2942,
+    "hash": "6270344430679711b81476e29878caa7"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png": {
+    "mtime": 1770371169641.2942,
+    "hash": "a0a8db5985280b3679d99a820ae2db79"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png": {
+    "mtime": 1770371169641.2942,
+    "hash": "afe1b655b9f32da22f9a4301bb8e6ba8"
+  },
+  "D:\\Document\\shutr\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png": {
+    "mtime": 1770371169641.2942,
+    "hash": "57838d52c318faff743130c3fcfae0c6"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-1024x1024@1x.png": {
+    "mtime": 1770371446206.2834,
+    "hash": "c785f8932297af4acd5f5ccb7630f01c"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-20x20@1x.png": {
+    "mtime": 1770371446256.2676,
+    "hash": "a2f8558fb1d42514111fbbb19fb67314"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-20x20@2x.png": {
+    "mtime": 1770371446006.19,
+    "hash": "2247a840b6ee72b8a069208af170e5b1"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-20x20@3x.png": {
+    "mtime": 1770371446522.8264,
+    "hash": "1b3b1538136316263c7092951e923e9d"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-29x29@1x.png": {
+    "mtime": 1770371446656.097,
+    "hash": "be8887071dd7ec39cb754d236aa9584f"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-29x29@2x.png": {
+    "mtime": 1770371445651.971,
+    "hash": "043119ef4faa026ff82bd03f241e5338"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-29x29@3x.png": {
+    "mtime": 1770371446472.826,
+    "hash": "2b1452c4c1bda6177b4fbbb832df217f"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-40x40@1x.png": {
+    "mtime": 1770371445673.1792,
+    "hash": "2247a840b6ee72b8a069208af170e5b1"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-40x40@2x.png": {
+    "mtime": 1770371446622.6907,
+    "hash": "8245359312aea1b0d2412f79a07b0ca5"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-40x40@3x.png": {
+    "mtime": 1770371445880.183,
+    "hash": "5b3c0902200ce596e9848f22e1f0fe0e"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-60x60@2x.png": {
+    "mtime": 1770371446056.2664,
+    "hash": "5b3c0902200ce596e9848f22e1f0fe0e"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-60x60@3x.png": {
+    "mtime": 1770371445589.715,
+    "hash": "e419d22a37bc40ba185aca1acb6d4ac6"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-76x76@1x.png": {
+    "mtime": 1770371445906.208,
+    "hash": "36c0d7a7132bdde18898ffdfcfcdc4d2"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-76x76@2x.png": {
+    "mtime": 1770371446689.362,
+    "hash": "643842917530acf4c5159ae851b0baf2"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-App-83.5x83.5@2x.png": {
+    "mtime": 1770371446606.1306,
+    "hash": "665cb5e3c5729da6d639d26eff47a503"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\LaunchImage.imageset\\LaunchImage.png": {
+    "mtime": 1770371445456.3787,
+    "hash": "978c1bee49d7ad5fc1a4d81099b13e18"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\LaunchImage.imageset\\LaunchImage@2x.png": {
+    "mtime": 1770371445423.0244,
+    "hash": "978c1bee49d7ad5fc1a4d81099b13e18"
+  },
+  "D:\\Document\\shutr\\ios\\Runner\\Assets.xcassets\\LaunchImage.imageset\\LaunchImage@3x.png": {
+    "mtime": 1770371445373.1335,
+    "hash": "978c1bee49d7ad5fc1a4d81099b13e18"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_1024.png": {
+    "mtime": 1770371445323.1926,
+    "hash": "c9becc9105f8cabce934d20c7bfb6aac"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_128.png": {
+    "mtime": 1770371444973.0708,
+    "hash": "3ded30823804caaa5ccc944067c54a36"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_16.png": {
+    "mtime": 1770371445073.0579,
+    "hash": "8bf511604bc6ed0a6aeb380c5113fdcf"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_256.png": {
+    "mtime": 1770371445356.431,
+    "hash": "dfe2c93d1536ae02f085cc63faa3430e"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_32.png": {
+    "mtime": 1770371445122.999,
+    "hash": "8e0ae58e362a6636bdfccbc04da2c58c"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_512.png": {
+    "mtime": 1770371445021.8833,
+    "hash": "0ad44039155424738917502c69667699"
+  },
+  "D:\\Document\\shutr\\macos\\Runner\\Assets.xcassets\\AppIcon.appiconset\\app_icon_64.png": {
+    "mtime": 1770371444956.4102,
+    "hash": "04e7b6ef05346c70b663ca1d97de3ad5"
+  },
+  "D:\\Document\\shutr\\web\\favicon.png": {
+    "mtime": 1770371169706.1804,
+    "hash": "5dcef449791fa27946b3d35ad8803796"
+  },
+  "D:\\Document\\shutr\\web\\icons\\Icon-192.png": {
+    "mtime": 1770371169707.9146,
+    "hash": "ac9a721a12bbc803b44f645561ecb1e1"
+  },
+  "D:\\Document\\shutr\\web\\icons\\Icon-512.png": {
+    "mtime": 1770371169707.9146,
+    "hash": "96e752610906ba2a93c65f8abe1645f1"
+  },
+  "D:\\Document\\shutr\\web\\icons\\Icon-maskable-192.png": {
+    "mtime": 1770371450322.3372,
+    "hash": "c457ef57daa1d16f64b27b786ec2ea3c"
+  },
+  "D:\\Document\\shutr\\web\\icons\\Icon-maskable-512.png": {
+    "mtime": 1770371450305.5488,
+    "hash": "301a7604d45b3e739efc881eb04896ea"
+  }
+}

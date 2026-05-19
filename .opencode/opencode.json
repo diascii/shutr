@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    ".opencode/plugins/graphify.js"
+  ],
+  "compaction": {
+    "reserved": 25000
+  },
+  "lsp": true,
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": ["D:\\npm\\mcp-server-filesystem.cmd", "D:\\Document"],
+      "enabled": true
+    },
+    "maestro": {
+      "type": "local",
+      "command": ["D:\\scoop\\shims\\maestro.cmd", "mcp"],
+      "enabled": true,
+      "timeout": 120000
+    }
+  }
+}
