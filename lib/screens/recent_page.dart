@@ -1,11 +1,15 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'photo_viewer.dart';
+import 'settings_sheet.dart';
 import '../utils/gallery_utils.dart';
+import '../utils/snackbar_helper.dart';
 
 class RecentPage extends StatefulWidget {
   const RecentPage({super.key});
@@ -29,15 +33,20 @@ class _RecentPageState extends State<RecentPage>
   bool _hasMore = true;
   bool _permissionDenied = false;
 
-  int _page = 0;
   static const int _pageSize = 80;
+  List<AssetPathEntity> _visiblePaths = [];
+  final Map<String, int> _albumPages = {};
 
-  int _crossAxisCount = 3;
+  final int _crossAxisCount = 3;
 
   bool _selectionMode = false;
   final Set<String> _selectedIds = {};
+  final Set<String> _pendingDeletions = {};
+  Timer? _deleteTimer;
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? _snackBarCtrl;
 
   int _lastRefresh = 0;
+  bool _showBackToTop = false;
 
   void _maybeRefresh(ValueNotifier<int> refresh) {
     if (refresh.value > _lastRefresh) {
@@ -48,7 +57,15 @@ class _RecentPageState extends State<RecentPage>
     }
   }
 
-
+  void _onScroll() {
+    if (!_scrollCtrl.hasClients) return;
+    final show = _scrollCtrl.position.pixels > 600;
+    if (show != _showBackToTop) setState(() => _showBackToTop = show);
+    if (_scrollCtrl.position.pixels >=
+        _scrollCtrl.position.maxScrollExtent - 600) {
+      if (!_loadingMore && _hasMore) _loadMore();
+    }
+  }
 
   @override
   void initState() {
@@ -63,13 +80,7 @@ class _RecentPageState extends State<RecentPage>
     super.dispose();
   }
 
-  void _onScroll() {
-    if (!_scrollCtrl.hasClients) return;
-    if (_scrollCtrl.position.pixels >=
-        _scrollCtrl.position.maxScrollExtent - 600) {
-      if (!_loadingMore && _hasMore) _loadMore();
-    }
-  }
+
 
 
 
@@ -80,7 +91,6 @@ class _RecentPageState extends State<RecentPage>
       _loading = true;
       _allAssets = [];
       _groups = [];
-      _page = 0;
       _hasMore = true;
     });
 
@@ -93,6 +103,9 @@ class _RecentPageState extends State<RecentPage>
       });
       return;
     }
+
+    final prefs = await SharedPreferences.getInstance();
+    final hiddenIds = (prefs.getStringList('hidden_albums') ?? []).toSet();
 
     final albums = await PhotoManager.getAssetPathList(
       type: RequestType.common,
@@ -113,33 +126,34 @@ class _RecentPageState extends State<RecentPage>
       return;
     }
 
-    for (final album in albums) {
-      if (album.isAll) {
-        _currentPath = album;
-        break;
-      }
+    _visiblePaths = albums.where((a) => !hiddenIds.contains(a.id)).toList();
+    if (_visiblePaths.isEmpty) {
+      setState(() {
+        _allAssets = [];
+        _groups = [];
+        _loading = false;
+      });
+      return;
     }
-    _currentPath ??= albums.first;
 
-    final assets =
-        await _currentPath!.getAssetListPaged(page: _page, size: _pageSize);
+    _currentPath = albums.firstWhere((a) => a.isAll, orElse: () => albums.first);
+    _albumPages.clear();
+    final allAssets = <AssetEntity>[];
+    final batchSize = (_pageSize / _visiblePaths.length).ceil().clamp(5, _pageSize);
+
+    for (final path in _visiblePaths) {
+      final assets = await path.getAssetListPaged(page: 0, size: batchSize);
+      allAssets.addAll(assets);
+      _albumPages[path.id] = 0;
+    }
+
+    allAssets.sort((a, b) => b.createDateTime.compareTo(a.createDateTime));
+    final assets = allAssets.take(_pageSize).toList();
 
     if (mounted && oldIds.isNotEmpty) {
       final newCount = assets.where((a) => !oldIds.contains(a.id)).length;
       if (newCount > 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('$newCount new ${newCount == 1 ? 'photo' : 'photos'} added'),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Up to date'),
-            duration: const Duration(seconds: 1),
-          ),
-        );
+        SnackBarHelper.show(context, message: '$newCount new ${newCount == 1 ? 'photo' : 'photos'} added', type: SnackBarType.info);
       }
     }
 
@@ -152,13 +166,20 @@ class _RecentPageState extends State<RecentPage>
   }
 
   Future<void> _loadMore() async {
-    if (_currentPath == null) return;
+    if (_visiblePaths.isEmpty) return;
     setState(() => _loadingMore = true);
-    _page++;
 
-    final assets =
-        await _currentPath!.getAssetListPaged(page: _page, size: _pageSize);
-    if (assets.isEmpty) {
+    final newAssets = <AssetEntity>[];
+    for (final path in _visiblePaths) {
+      final page = (_albumPages[path.id] ?? 0) + 1;
+      final batch = await path.getAssetListPaged(page: page, size: 20);
+      if (batch.isNotEmpty) {
+        newAssets.addAll(batch);
+        _albumPages[path.id] = page;
+      }
+    }
+
+    if (newAssets.isEmpty) {
       setState(() {
         _hasMore = false;
         _loadingMore = false;
@@ -166,13 +187,14 @@ class _RecentPageState extends State<RecentPage>
       return;
     }
 
+    newAssets.sort((a, b) => b.createDateTime.compareTo(a.createDateTime));
     if (_allAssets.length > 300) PhotoManager.clearFileCache();
 
     setState(() {
-      _allAssets.addAll(assets);
+      _allAssets.addAll(newAssets);
       _groups = groupAssetsByDate(_allAssets);
       _loadingMore = false;
-      _hasMore = assets.length == _pageSize;
+      _hasMore = true;
     });
   }
 
@@ -208,6 +230,69 @@ class _RecentPageState extends State<RecentPage>
       _selectionMode = true;
     });
     HapticFeedback.lightImpact();
+  }
+
+  Future<void> _moveSelectedToAlbum() async {
+    final toMove =
+        _allAssets.where((a) => _selectedIds.contains(a.id)).toList();
+    if (toMove.isEmpty) return;
+
+    final albums = await PhotoManager.getAssetPathList(type: RequestType.common);
+    if (!mounted) return;
+
+    final theme = Theme.of(context);
+    final target = await showDialog<AssetPathEntity>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: theme.colorScheme.surfaceContainerHigh,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text('Move to...', style: theme.textTheme.titleLarge),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: albums.length,
+            itemBuilder: (ctx, i) => ListTile(
+              title: Text(albums[i].name,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: albums[i].id == _currentPath?.id
+                    ? FontWeight.w600
+                    : FontWeight.w400,
+              )),
+              trailing: albums[i].id == _currentPath?.id
+                  ? Icon(Icons.check, color: theme.colorScheme.primary, size: 18)
+                  : null,
+              onTap: () => Navigator.pop(ctx, albums[i]),
+            ),
+          ),
+        ),
+      ),
+    );
+    if (target == null || !mounted) return;
+
+    int copied = 0;
+    for (final asset in toMove) {
+      try {
+        if (Platform.isIOS || Platform.isMacOS) {
+          await PhotoManager.editor.copyAssetToPath(
+              asset: asset, pathEntity: target);
+        } else {
+          final file = await asset.file;
+          if (file == null) continue;
+          await PhotoManager.editor.saveImageWithPath(
+            file.path,
+            relativePath: 'Pictures/${target.name}',
+            title: asset.title,
+          );
+        }
+        copied++;
+      } catch (_) {}
+    }
+
+    if (mounted) {
+      SnackBarHelper.show(context, message: 'Copied $copied ${copied == 1 ? 'photo' : 'photos'} to "${target.name}"', type: SnackBarType.success);
+      _cancelSelection();
+    }
   }
 
   Future<void> _createAlbumFromSelected() async {
@@ -290,20 +375,66 @@ class _RecentPageState extends State<RecentPage>
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content:
-                  Text('Album "$name" created with ${toMove.length} items')),
+          SnackBar(content: Text('Album "$name" created with ${toMove.length} items')),
         );
         context.read<ValueNotifier<int>>().value++;
         _cancelSelection();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
-        );
+        SnackBarHelper.show(context, message: 'Error: $e', type: SnackBarType.error);
       }
     }
+  }
+
+  void _handleDeletion(List<String> ids) {
+    if (ids.isEmpty) return;
+
+    _deleteTimer?.cancel();
+    _snackBarCtrl?.close();
+
+    setState(() {
+      _pendingDeletions.addAll(ids);
+      _groups = groupAssetsByDate(
+          _allAssets.where((a) => !_pendingDeletions.contains(a.id)).toList());
+    });
+
+    _snackBarCtrl = ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            '${ids.length == 1 ? 'Photo' : '${ids.length} photos'} deleted',
+            style: const TextStyle(color: Colors.white)),
+        action: SnackBarAction(
+          label: 'UNDO',
+          textColor: const Color(0xFF6B8AFF),
+          onPressed: () {
+            _deleteTimer?.cancel();
+            _snackBarCtrl?.close();
+            setState(() {
+              _pendingDeletions.removeAll(ids);
+              _groups = groupAssetsByDate(_allAssets
+                  .where((a) => !_pendingDeletions.contains(a.id))
+                  .toList());
+            });
+          },
+        ),
+        backgroundColor: const Color(0xFF1C1C1C),
+        duration: const Duration(seconds: 5),
+      ),
+    );
+
+    _deleteTimer = Timer(const Duration(seconds: 5), () async {
+      _snackBarCtrl?.close();
+      if (_pendingDeletions.isEmpty) return;
+      final toDelete = List<String>.from(_pendingDeletions);
+      await PhotoManager.editor.deleteWithIds(toDelete);
+      if (mounted) {
+        setState(() {
+          _allAssets.removeWhere((a) => toDelete.contains(a.id));
+          _pendingDeletions.clear();
+        });
+      }
+    });
   }
 
   Future<void> _deleteSelected() async {
@@ -315,13 +446,9 @@ class _RecentPageState extends State<RecentPage>
     );
     if (confirm != true) return;
 
-    await PhotoManager.editor.deleteWithIds(toDelete.map((a) => a.id).toList());
-    setState(() {
-      _allAssets.removeWhere((a) => _selectedIds.contains(a.id));
-      _groups = groupAssetsByDate(_allAssets);
-      _selectedIds.clear();
-      _selectionMode = false;
-    });
+    final ids = toDelete.map((a) => a.id).toList();
+    _handleDeletion(ids);
+    _cancelSelection();
   }
 
   void _openViewer(List<AssetEntity> groupAssets, int groupIndex) async {
@@ -363,10 +490,7 @@ class _RecentPageState extends State<RecentPage>
     );
 
     if (deletedIds != null && deletedIds.isNotEmpty) {
-      setState(() {
-        _allAssets.removeWhere((a) => deletedIds.contains(a.id));
-        _groups = groupAssetsByDate(_allAssets);
-      });
+      _handleDeletion(deletedIds);
     }
   }
 
@@ -410,27 +534,65 @@ class _RecentPageState extends State<RecentPage>
             child: CustomScrollView(
               controller: _scrollCtrl,
               physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    const SliverToBoxAdapter(child: SizedBox(height: 12)),
-                    ..._groups.map(_buildGroup),
-                    if (_loadingMore)
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: theme.colorScheme.primary,
-                              strokeWidth: 2,
-                            ),
-                          ),
-                        ),
-                      ),
-                    SliverToBoxAdapter(
-                        child: SizedBox(height: _selectionMode ? 88 : 24)),
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                  title: Text(
+                    'Photos',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  centerTitle: false,
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.settings_outlined, size: 22),
+                      onPressed: () => SettingsSheet.show(context),
+                    ),
+                    const SizedBox(width: 8),
                   ],
                 ),
-              ),
+                ..._groups.map(_buildGroup),
+                if (_loadingMore)
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: theme.colorScheme.primary,
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                SliverToBoxAdapter(
+                    child: SizedBox(height: _selectionMode ? 88 : 24)),
+              ],
+            ),
+          ),
               _FastScrollbar(controller: _scrollCtrl, allAssets: _allAssets),
+              if (_showBackToTop && !_selectionMode)
+                Positioned(
+                  right: 16,
+                  bottom: 24,
+                  child: AnimatedScale(
+                    scale: _showBackToTop ? 1 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOutCubic,
+                    child: FloatingActionButton.small(
+                      heroTag: 'backToTop',
+                      backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                      onPressed: () => _scrollCtrl.animateTo(0,
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeOutCubic),
+                      child: Icon(Icons.arrow_upward,
+                          color: theme.colorScheme.onSurface, size: 20),
+                    ),
+                  ),
+                ),
               if (_selectionMode)
                 Positioned(
                   bottom: 0,
@@ -442,6 +604,7 @@ class _RecentPageState extends State<RecentPage>
                     onCancel: _cancelSelection,
                     onSelectAll: _selectAll,
                     onCreateAlbum: _createAlbumFromSelected,
+                    onMoveToAlbum: _moveSelectedToAlbum,
                   ),
                 ),
         ],

@@ -230,6 +230,7 @@ class SelectionBar extends StatelessWidget {
   final VoidCallback onDelete;
   final VoidCallback onCancel;
   final VoidCallback onCreateAlbum;
+  final VoidCallback? onMoveToAlbum;
   final VoidCallback onSelectAll;
 
   const SelectionBar({
@@ -238,6 +239,7 @@ class SelectionBar extends StatelessWidget {
     required this.onDelete,
     required this.onCancel,
     required this.onCreateAlbum,
+    this.onMoveToAlbum,
     required this.onSelectAll,
   });
 
@@ -298,6 +300,26 @@ class SelectionBar extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         )),
                   ),
+                  if (onMoveToAlbum != null) ...[
+                    const SizedBox(width: 4),
+                    TextButton.icon(
+                      onPressed: count > 0 ? onMoveToAlbum : null,
+                      icon: Icon(Icons.drive_file_move_outlined,
+                          color: count > 0
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.onSurfaceVariant
+                                  .withValues(alpha: 0.3),
+                          size: 18),
+                      label: Text('Move',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: count > 0
+                                ? theme.colorScheme.primary
+                                : theme.colorScheme.onSurfaceVariant
+                                    .withValues(alpha: 0.3),
+                            fontWeight: FontWeight.w600,
+                          )),
+                    ),
+                  ],
                   const Spacer(),
                   TextButton.icon(
                     onPressed: count > 0 ? onDelete : null,

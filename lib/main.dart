@@ -10,7 +10,6 @@ import 'services/peer_service.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Set edge-to-edge globally; viewer switches to immersiveSticky
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -36,76 +35,133 @@ class ShutRApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final baseTheme = ThemeData.dark(useMaterial3: true);
 
-    return MaterialApp(
-      title: 'Shutr',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6B8AFF),
+    return _LockedMediaQuery(
+      child: MaterialApp(
+        title: 'Shutr',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
           brightness: Brightness.dark,
-          primary: const Color(0xFF6B8AFF),
-          surface: const Color(0xFF0A0A0A),
-          surfaceContainer: const Color(0xFF141414),
-          surfaceContainerHigh: const Color(0xFF1C1C1C),
-          surfaceContainerHighest: const Color(0xFF2A2A2A),
-        ),
-        scaffoldBackgroundColor: const Color(0xFF0A0A0A),
-        textTheme: GoogleFonts.interTextTheme(baseTheme.textTheme).copyWith(
-          displayLarge: GoogleFonts.inter(
-              fontWeight: FontWeight.w300, letterSpacing: -1.5),
-          titleLarge: GoogleFonts.inter(
-              fontWeight: FontWeight.w400, letterSpacing: -0.5),
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: false,
-        ),
-        cardTheme: CardThemeData(
-          color: const Color(0xFF1C1C1C),
-          elevation: 0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF6B8AFF),
-            foregroundColor: Colors.black,
-            minimumSize: const Size.fromHeight(56),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF6B8AFF),
+            brightness: Brightness.dark,
+            primary: const Color(0xFF6B8AFF),
+            surface: const Color(0xFF0A0A0A),
+            surfaceContainer: const Color(0xFF141414),
+            surfaceContainerHigh: const Color(0xFF1C1C1C),
+            surfaceContainerHighest: const Color(0xFF2A2A2A),
+          ),
+          scaffoldBackgroundColor: const Color(0xFF0A0A0A),
+          textTheme: GoogleFonts.interTextTheme(baseTheme.textTheme).copyWith(
+            displayLarge: GoogleFonts.inter(
+                fontWeight: FontWeight.w300, letterSpacing: -1.5),
+            titleLarge: GoogleFonts.inter(
+                fontWeight: FontWeight.w400, letterSpacing: -0.5),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: false,
+          ),
+          cardTheme: CardThemeData(
+            color: const Color(0xFF1C1C1C),
+            elevation: 0,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            textStyle:
-                const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF6B8AFF),
+              foregroundColor: Colors.black,
+              minimumSize: const Size.fromHeight(56),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              textStyle:
+                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              elevation: 0,
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: const Color(0xFF2A2A2A),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Color(0xFF141414),
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Color(0xFF555555),
+            type: BottomNavigationBarType.fixed,
             elevation: 0,
           ),
+          extensions: const [
+            ShutrThemeExtension(
+              surfaceVariant: Color(0xFF141414),
+              glassyBackground: Color(0xCC0A0A0A),
+            ),
+          ],
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: const Color(0xFF2A2A2A),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFF141414),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Color(0xFF555555),
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-        ),
-        extensions: const [
-          ShutrThemeExtension(
-            surfaceVariant: Color(0xFF141414),
-            glassyBackground: Color(0xCC0A0A0A),
-          ),
-        ],
+        home: const PermissionGate(),
       ),
-      home: const PermissionGate(),
+    );
+  }
+}
+
+// Locks MediaQuery size to prevent Android 10 system UI resize
+// from causing layout shifts. Only updates when screen truly grows
+// (e.g. rotation), ignores shrinks caused by system bar toggling.
+class _LockedMediaQuery extends StatefulWidget {
+  final Widget child;
+  const _LockedMediaQuery({required this.child});
+
+  @override
+  State<_LockedMediaQuery> createState() => _LockedMediaQueryState();
+}
+
+class _LockedMediaQueryState extends State<_LockedMediaQuery>
+    with WidgetsBindingObserver {
+  Size? _lockedSize;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    final view = WidgetsBinding.instance.platformDispatcher.views.first;
+    final dpr = view.devicePixelRatio;
+    final newSize = Size(
+      view.physicalSize.width / dpr,
+      view.physicalSize.height / dpr,
+    );
+    // Only lock to larger sizes — never shrink
+    // Shrinks = system UI bars toggling (ignore)
+    // Grows = real screen change like rotation (update)
+    if (_lockedSize == null ||
+        newSize.width > _lockedSize!.width ||
+        newSize.height > _lockedSize!.height) {
+      setState(() => _lockedSize = newSize);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_lockedSize == null) return widget.child;
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(size: _lockedSize),
+      child: widget.child,
     );
   }
 }
@@ -174,14 +230,10 @@ class _PermissionGateState extends State<PermissionGate> {
 
   Future<void> _request() async {
     final PermissionState ps = await PhotoManager.requestPermissionExtend();
-
-    // Also request notifications for the live feature
     await Permission.notification.request();
-
     if (ps.isAuth || ps.hasAccess) {
       setState(() => _granted = true);
     } else {
-      // If still not granted, user might need to go to settings
       final status = await Permission.photos.status;
       if (status.isPermanentlyDenied) {
         openAppSettings();

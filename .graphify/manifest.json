@@ -1,43 +1,55 @@
 {
-  "D:\\Document\\shutr\\android\\app\\build.gradle.kts": {
-    "mtime": 1777455978009.7153,
-    "hash": "8bc57eeadf6a0c14787270b92cad74c2"
+  "D:\\Document\\shutr\\.opencode\\plugins\\graphify.js": {
+    "mtime": 1778839165465.8457,
+    "hash": "f9c882092e509e1544f17f27ea6a9c81"
   },
-  "D:\\Document\\shutr\\android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java": {
-    "mtime": 1779003694771.9822,
-    "hash": "ac34a3f8e6466c443dfbcde46eca277b"
+  "D:\\Document\\shutr\\Shutr V0\\lib\\main.dart": {
+    "mtime": 1778963223858.661,
+    "hash": "d1390f1ee22aef77a41e852bf3a770c8"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\album_detail_page.dart": {
+    "mtime": 1778963223875.2507,
+    "hash": "e81561f9b3062d9208e8f5574e918aa5"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\albums_page.dart": {
+    "mtime": 1778963223890.8796,
+    "hash": "24a1ff5f2e2b1437e9e3956c745b6f79"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\gallery_screen.dart": {
+    "mtime": 1778963223892.4749,
+    "hash": "dbe08e7cc0e29d79d047bcc102151def"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\photo_viewer.dart": {
+    "mtime": 1778963223896.4707,
+    "hash": "672f0296baaca0a49e2bc24bb4732016"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\recent_page.dart": {
+    "mtime": 1778963223926.0913,
+    "hash": "5fd03ee494a5a7e71fd908565cd6bd6b"
+  },
+  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\search_page.dart": {
+    "mtime": 1778963297247.5278,
+    "hash": "2cb46589a86239705ba5b1eace131dd2"
+  },
+  "D:\\Document\\shutr\\android\\app\\build.gradle.kts": {
+    "mtime": 1779193426640.6719,
+    "hash": "1433d5881040bdb7acb69fb05c8081ea"
   },
   "D:\\Document\\shutr\\android\\app\\src\\main\\kotlin\\com\\example\\shutr\\MainActivity.kt": {
-    "mtime": 1778678876368.6855,
-    "hash": "c7ecca2f74593f927890a89a122b6125"
+    "mtime": 1779358915855.6301,
+    "hash": "92c2be43cf1381fb05280294f55aa1ca"
   },
   "D:\\Document\\shutr\\android\\build.gradle.kts": {
     "mtime": 1777271021869.0361,
     "hash": "803fe22651fbe96ed401eb0b66a492d1"
   },
-  "D:\\Document\\shutr\\android\\gradlew": {
-    "mtime": 1777271023719.605,
-    "hash": "7f1cd7eb3f75a1dc85cd37753972a6e2"
-  },
   "D:\\Document\\shutr\\android\\settings.gradle.kts": {
     "mtime": 1777271022072.5955,
     "hash": "f276a44edd917afd836899357fdae60e"
   },
-  "D:\\Document\\shutr\\ios\\Flutter\\ephemeral\\flutter_lldb_helper.py": {
-    "mtime": 1778679243500.6301,
-    "hash": "98fc75412162af387e2e3461e4e58094"
-  },
   "D:\\Document\\shutr\\ios\\Runner\\AppDelegate.swift": {
     "mtime": 1770371169657.9404,
     "hash": "e277c49e98c9f80e9e71c0524a5cb60f"
-  },
-  "D:\\Document\\shutr\\ios\\Runner\\GeneratedPluginRegistrant.h": {
-    "mtime": 1777271030569.3137,
-    "hash": "decb9041b5e91a07e66f4664e5dac408"
-  },
-  "D:\\Document\\shutr\\ios\\Runner\\GeneratedPluginRegistrant.m": {
-    "mtime": 1779003694853.3242,
-    "hash": "461a095ab068b2de5c8ce2d5ef3d7078"
   },
   "D:\\Document\\shutr\\ios\\Runner\\Runner-Bridging-Header.h": {
     "mtime": 1770371169674.4585,
@@ -48,44 +60,44 @@
     "hash": "24e5d095048eb86c30423f4e04b6e57b"
   },
   "D:\\Document\\shutr\\lib\\main.dart": {
-    "mtime": 1778999749582.1143,
-    "hash": "ef9724b67622d5d01906ae29e23250c7"
-  },
-  "D:\\Document\\shutr\\lib\\screens\\albums_page.dart": {
-    "mtime": 1779007930530.4033,
-    "hash": "de0ba0332bb5303f726841c1a6399574"
+    "mtime": 1779360209369.2935,
+    "hash": "550cd8588e45576395fca721a418a747"
   },
   "D:\\Document\\shutr\\lib\\screens\\album_detail_page.dart": {
-    "mtime": 1779008795315.1987,
-    "hash": "236537ac910965862218a50316af8c14"
+    "mtime": 1779316067953.047,
+    "hash": "6956e5b141c43912788bb352fa88d47d"
+  },
+  "D:\\Document\\shutr\\lib\\screens\\albums_page.dart": {
+    "mtime": 1779656545100.181,
+    "hash": "3cf9340dd90a82630f4fdfa28c7c1b61"
   },
   "D:\\Document\\shutr\\lib\\screens\\gallery_screen.dart": {
-    "mtime": 1778996917082.325,
-    "hash": "42762a44da7e2694500b1559a88623ca"
+    "mtime": 1779348264060.857,
+    "hash": "40f477dbd62c82e284f0581341646a62"
   },
   "D:\\Document\\shutr\\lib\\screens\\photo_viewer.dart": {
-    "mtime": 1779010432293.4443,
-    "hash": "089b90e037a35e7c64669cb01839b442"
+    "mtime": 1779656429187.376,
+    "hash": "142705fe034659c9b940a4b0f884ff08"
   },
   "D:\\Document\\shutr\\lib\\screens\\recent_page.dart": {
-    "mtime": 1779011732106.1692,
-    "hash": "e06460658ccf923296d56c8dd0ae0315"
+    "mtime": 1779647813859.0767,
+    "hash": "18be7d22c99ec77731c11fabf10306ed"
   },
   "D:\\Document\\shutr\\lib\\screens\\search_page.dart": {
-    "mtime": 1778999906347.231,
-    "hash": "8da8ddf6eb09ab90a2ccde7272c2b281"
+    "mtime": 1779310094251.2812,
+    "hash": "e74ea5ddc451192d15e4312d2a2c046b"
   },
   "D:\\Document\\shutr\\lib\\screens\\shared_gallery_screen.dart": {
-    "mtime": 1779003711006.1116,
-    "hash": "216426c6023aad34968d66d37681be57"
+    "mtime": 1779626213470.6155,
+    "hash": "37cd54faa05e94d3d08e672b8b8b900f"
   },
   "D:\\Document\\shutr\\lib\\services\\peer_service.dart": {
-    "mtime": 1778963224025.3472,
-    "hash": "1e180478c6e587c1071f5682ae146f18"
+    "mtime": 1779657361389.391,
+    "hash": "2f40c776b5a42c67c7de783f99169f22"
   },
   "D:\\Document\\shutr\\lib\\utils\\gallery_utils.dart": {
-    "mtime": 1779003760874.671,
-    "hash": "90a4f3923846d7856096eae9ed564c11"
+    "mtime": 1779626884495.548,
+    "hash": "e85d77692f13009e78ae7713a63c53a8"
   },
   "D:\\Document\\shutr\\linux\\flutter\\generated_plugin_registrant.cc": {
     "mtime": 1777274442835.9055,
@@ -122,34 +134,6 @@
   "D:\\Document\\shutr\\macos\\RunnerTests\\RunnerTests.swift": {
     "mtime": 1777271023154.0918,
     "hash": "8059f5d27a19c556eeafb49b3f9b7bdd"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\main.dart": {
-    "mtime": 1778963223858.661,
-    "hash": "d1390f1ee22aef77a41e852bf3a770c8"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\albums_page.dart": {
-    "mtime": 1778963223890.8796,
-    "hash": "24a1ff5f2e2b1437e9e3956c745b6f79"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\album_detail_page.dart": {
-    "mtime": 1778963223875.2507,
-    "hash": "e81561f9b3062d9208e8f5574e918aa5"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\gallery_screen.dart": {
-    "mtime": 1778963223892.4749,
-    "hash": "dbe08e7cc0e29d79d047bcc102151def"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\photo_viewer.dart": {
-    "mtime": 1778963223896.4707,
-    "hash": "672f0296baaca0a49e2bc24bb4732016"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\recent_page.dart": {
-    "mtime": 1778963223926.0913,
-    "hash": "5fd03ee494a5a7e71fd908565cd6bd6b"
-  },
-  "D:\\Document\\shutr\\Shutr V0\\lib\\screens\\search_page.dart": {
-    "mtime": 1778963297247.5278,
-    "hash": "2cb46589a86239705ba5b1eace131dd2"
   },
   "D:\\Document\\shutr\\test\\widget_test.dart": {
     "mtime": 1778443569223.8123,
@@ -195,9 +179,57 @@
     "mtime": 1770371169707.9146,
     "hash": "7569387d58711ab975940f4df3b4bcda"
   },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-add-integration-test\\SKILL.md": {
+    "mtime": 1778850774801.9421,
+    "hash": "5eb8e43c9003b77922fcfee4ef769e5e"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-add-widget-preview\\SKILL.md": {
+    "mtime": 1778850774801.9421,
+    "hash": "ed986e89480f34737bf75c684153ea92"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-add-widget-test\\SKILL.md": {
+    "mtime": 1778850774802.9429,
+    "hash": "2f164d9f31c6b986fc05a431f933c642"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-apply-architecture-best-practices\\SKILL.md": {
+    "mtime": 1778850774803.9426,
+    "hash": "c475304b95d37c3f58d411ba603e5034"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-build-responsive-layout\\SKILL.md": {
+    "mtime": 1778850774804.942,
+    "hash": "e8b3e480ed870a8cd53ffbe507af3c49"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-fix-layout-issues\\SKILL.md": {
+    "mtime": 1778850774804.942,
+    "hash": "c7e786747a5dc7cd564798147a5b4a32"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-implement-json-serialization\\SKILL.md": {
+    "mtime": 1778850774805.9414,
+    "hash": "ad23384ac06d048d63ed1833e72dcb9a"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-setup-declarative-routing\\SKILL.md": {
+    "mtime": 1778850774806.9426,
+    "hash": "89dbf25c6b248881072d1e5fde1c8ecf"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-setup-localization\\SKILL.md": {
+    "mtime": 1778850774807.9438,
+    "hash": "8592da5f0e92210344e1a6cec892c34d"
+  },
+  "D:\\Document\\shutr\\.agents\\skills\\flutter-use-http-package\\SKILL.md": {
+    "mtime": 1778850774808.9446,
+    "hash": "06ccfed6b8e5ad6cc798e1cb65268f57"
+  },
+  "D:\\Document\\shutr\\.graphify\\GRAPH_REPORT.md": {
+    "mtime": 1779626314202.4116,
+    "hash": "2c3608754099def2ff66ae16f5bbf792"
+  },
   "D:\\Document\\shutr\\AGENTS.md": {
     "mtime": 1778959352016.7302,
     "hash": "7e08ee08604a3fc5d396f4b7921de106"
+  },
+  "D:\\Document\\shutr\\README.md": {
+    "mtime": 1779353168879.9841,
+    "hash": "1857c3d18d33b106c7f0e9e0be700c04"
   },
   "D:\\Document\\shutr\\analysis_options.yaml": {
     "mtime": 1777271021822.1638,
@@ -219,13 +251,13 @@
     "mtime": 1770371169674.4585,
     "hash": "30cc1614b16214b66c014af09ba699eb"
   },
+  "D:\\Document\\shutr\\maestro\\v1_smoke_test.yaml": {
+    "mtime": 1779014242542.6514,
+    "hash": "e81a4555b8fe2b075abf453e7f1ed0b7"
+  },
   "D:\\Document\\shutr\\pubspec.yaml": {
     "mtime": 1779003683205.5122,
     "hash": "75cfa16c415a54969ccd2445b2ba07bb"
-  },
-  "D:\\Document\\shutr\\README.md": {
-    "mtime": 1779011417856.7314,
-    "hash": "7f91520ff3420e5ca522ca8312a51f2d"
   },
   "D:\\Document\\shutr\\test\\tmpl.txt": {
     "mtime": 1778656321106.4312,
