@@ -766,7 +766,7 @@ class PeerService extends ChangeNotifier {
   <h1>Shutr</h1>
   <p>Enter your name to view shared albums</p>
   <input id="nameInput" placeholder="Your name" maxlength="20" autofocus>
-  <button id="joinBtn" onclick="sendJoin()">Join</button>
+  <button id="joinBtn">Join</button>
 </div>
 
 <div class="waiting" id="waitingScreen">
@@ -820,28 +820,44 @@ let currentAlbum = null;
 let currentPhotos = [];
 let viewerIndex = 0;
 
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 function sendJoin() {
   const input = document.getElementById('nameInput');
   nickname = input.value.trim();
   if (!nickname) { input.focus(); return; }
+  console.log('Sending join request...');
   document.getElementById('joinBtn').disabled = true;
+  document.getElementById('joinBtn').textContent = 'Connecting...';
   connectWS(true);
 }
 
 function connectWS(join) {
-  if (ws) ws.close();
-  ws = new WebSocket('ws://' + host + ':' + port + '/ws');
+  if (ws) try { ws.close(); } catch(e) {}
+  const url = 'ws://' + host + ':' + port + '/ws';
+  console.log('Connecting WS:', url);
+  ws = new WebSocket(url);
   ws.onopen = () => {
+    console.log('WS connected');
     if (join) {
-      ws.send(JSON.stringify({type: 'join', name: nickname, source: 'web', id: crypto.randomUUID()}));
+      const msg = {type: 'join', name: nickname, source: 'web', id: uuid()};
+      console.log('Sending:', JSON.stringify(msg));
+      ws.send(JSON.stringify(msg));
       document.getElementById('joinScreen').style.display = 'none';
       document.getElementById('waitingScreen').style.display = 'flex';
     }
   };
   ws.onmessage = (e) => {
+    console.log('WS message:', e.data);
     const data = JSON.parse(e.data);
-      if (data.type === 'decision') {
+    if (data.type === 'decision') {
       if (data.status === 'accepted') {
+        console.log('Join accepted');
         document.getElementById('waitingScreen').style.display = 'none';
         document.getElementById('app').style.display = 'block';
         fetchAlbums();
@@ -855,14 +871,19 @@ function connectWS(join) {
       location.reload();
     }
     if (['sync', 'album_added', 'album_removed'].includes(data.type)) {
-      if (document.getElementById('app').style.display !== 'none') fetchAlbums();
+      if (document.getElementById('app').style.display !== 'none') {
+        fetchAlbums();
+        if (currentAlbum) fetchPhotos();
+      }
     }
   };
-  ws.onclose = () => {
+  ws.onclose = (e) => {
+    console.log('WS closed:', e.code, e.reason);
     if (!join) setTimeout(() => connectWS(false), 3000);
   };
-  ws.onerror = () => {
-    if (join) { alert('Could not connect to host.'); location.reload(); }
+  ws.onerror = (e) => {
+    console.log('WS error:', e);
+    if (join) { alert('Could not connect to host. Make sure the host is on the same WiFi and the app is running.'); location.reload(); }
   };
 }
 
@@ -892,7 +913,7 @@ function renderAlbums() {
   }
   empty.style.display = 'none';
   grid.innerHTML = albums.map((a, i) => '<div class="album-card" onclick="openAlbum(' + i + ')">' +
-    (a.firstPhotoId ? '<img src="/thumb/' + a.firstPhotoId + '" loading="lazy" onerror="this.style.display='none'">' : '<div style="width:100%;aspect-ratio:1;border-radius:8px;background:#1C1C1C"></div>') +
+    (a.firstPhotoId ? '<img src="/thumb/' + a.firstPhotoId + '" loading="lazy" onerror="this.style.display=\\'none\\'">' : '<div style="width:100%;aspect-ratio:1;border-radius:8px;background:#1C1C1C"></div>') +
     '<div class="album-info"><div class="name">' + esc(a.name || 'Unnamed') + '</div>' +
     '<div class="count">' + a.count + ' photos</div></div></div>'
   ).join('');
@@ -923,7 +944,7 @@ function fetchPhotos() {
 function renderPhotos() {
   const grid = document.getElementById('photoGrid');
   grid.innerHTML = currentPhotos.map((p, i) =>
-    '<img src="/thumb/' + p.id + '" loading="lazy" onclick="openViewer(' + i + ')" onerror="this.style.display='none'">'
+    '<img src="/thumb/' + p.id + '" loading="lazy" onclick="openViewer(' + i + ')" onerror="this.style.display=\\'none\\'">'
   ).join('');
 }
 
@@ -961,7 +982,9 @@ function esc(s) {
   const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
 }
 
+document.getElementById('joinBtn').addEventListener('click', sendJoin);
 document.getElementById('nameInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendJoin(); });
+window.addEventListener('beforeunload', (e) => { e.preventDefault(); e.returnValue = ''; });
 document.addEventListener('keydown', (e) => {
   if (!document.getElementById('viewer').classList.contains('open')) return;
   if (e.key === 'Escape') closeViewer();

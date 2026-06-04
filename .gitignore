@@ -45,8 +45,8 @@ app.*.map.json
 /android/app/release
 
 # opencode / graphify
-.opencode/node_modules/
-.graphify/branch.json
-.graphify/worktree.json
-.graphify/needs_update
-.graphify/cache/
+.opencode/
+.graphify/
+.agents/
+.codex/
+.gemini/

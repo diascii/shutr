@@ -351,9 +351,9 @@ class _AlbumsPageState extends State<AlbumsPage>
                                       color: const Color(0xFF6B8AFF).withValues(alpha: 0.7),
                                       size: 12),
                                   const SizedBox(width: 4),
-                                  Text(
+                                  const Text(
                                     'URL',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Color(0xFF6B8AFF),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,

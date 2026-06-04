@@ -126,7 +126,7 @@ class _RecentPageState extends State<RecentPage>
       return;
     }
 
-    _visiblePaths = albums.where((a) => !hiddenIds.contains(a.id)).toList();
+    _visiblePaths = albums.where((a) => !hiddenIds.contains(a.id) && !a.isAll).toList();
     if (_visiblePaths.isEmpty) {
       setState(() {
         _allAssets = [];
@@ -270,6 +270,14 @@ class _RecentPageState extends State<RecentPage>
     );
     if (target == null || !mounted) return;
 
+    String? targetRelativePath;
+    if (Platform.isAndroid) {
+      final sample = await target.getAssetListRange(start: 0, end: 1);
+      if (sample.isNotEmpty) {
+        targetRelativePath = sample.first.relativePath;
+      }
+    }
+
     int copied = 0;
     for (final asset in toMove) {
       try {
@@ -281,7 +289,7 @@ class _RecentPageState extends State<RecentPage>
           if (file == null) continue;
           await PhotoManager.editor.saveImageWithPath(
             file.path,
-            relativePath: 'Pictures/${target.name}',
+            relativePath: targetRelativePath ?? 'Pictures/${target.name}',
             title: asset.title,
           );
         }

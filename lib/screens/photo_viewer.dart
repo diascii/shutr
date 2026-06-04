@@ -537,6 +537,7 @@ class _ZoomablePhotoState extends State<_ZoomablePhoto>
   final TransformationController _ctrl = TransformationController();
   late AnimationController _animCtrl;
   Animation<Matrix4>? _anim;
+  bool _loaded = false;
 
   @override
   void initState() {
@@ -582,6 +583,9 @@ class _ZoomablePhotoState extends State<_ZoomablePhoto>
   @override
   void didUpdateWidget(_ZoomablePhoto old) {
     super.didUpdateWidget(old);
+    if (old.asset.id != widget.asset.id) {
+      _loaded = false;
+    }
     if (old.turns != widget.turns) {
       _ctrl.value = Matrix4.identity();
     }
@@ -608,32 +612,54 @@ class _ZoomablePhotoState extends State<_ZoomablePhoto>
             transformationController: _ctrl,
             minScale: 1.0,
             maxScale: 4.0,
-            child: Center(
-              child: AnimatedRotation(
-                turns: widget.turns,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOutCubic,
-                child: AssetEntityImage(
-                  widget.asset,
-                  isOriginal: false,
-                  thumbnailSize: ThumbnailSize(
-                    (widget.screenSize.width * 2).clamp(1080, 4000).toInt(),
-                    (widget.screenSize.height * 2).clamp(1920, 4000).toInt(),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Center(
+                  child: AnimatedRotation(
+                    turns: widget.turns,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutCubic,
+                    child: AssetEntityImage(
+                      widget.asset,
+                      isOriginal: false,
+                      thumbnailSize: ThumbnailSize(
+                        (widget.screenSize.width * 2).clamp(1080, 4000).toInt(),
+                        (widget.screenSize.height * 2).clamp(1920, 4000).toInt(),
+                      ),
+                      fit: BoxFit.contain,
+                      frameBuilder: (_, child, frame, __) {
+                        if (frame != null && !_loaded) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (mounted) setState(() => _loaded = true);
+                          });
+                          return child;
+                        }
+                        if (frame == null && !_loaded) {
+                          return AssetEntityImage(
+                            widget.asset,
+                            isOriginal: false,
+                            thumbnailSize: const ThumbnailSize.square(200),
+                            fit: BoxFit.contain,
+                          );
+                        }
+                        return child;
+                      },
+                    ),
                   ),
-                  fit: BoxFit.contain,
-                  frameBuilder: (_, child, frame, __) {
-                    if (frame == null) {
-                      return AssetEntityImage(
-                        widget.asset,
-                        isOriginal: false,
-                        thumbnailSize: const ThumbnailSize.square(600),
-                        fit: BoxFit.contain,
-                      );
-                    }
-                    return child;
-                  },
                 ),
-              ),
+                if (!_loaded)
+                  const Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
         ),

@@ -9,12 +9,14 @@ class RemotePhotoViewer extends StatefulWidget {
   final List<dynamic> assets;
   final int initialIndex;
   final String baseUrl;
+  final ValueChanged<String>? onDownloaded;
 
   const RemotePhotoViewer({
     super.key,
     required this.assets,
     required this.initialIndex,
     required this.baseUrl,
+    this.onDownloaded,
   });
 
   @override
@@ -76,6 +78,7 @@ class _RemotePhotoViewerState extends State<RemotePhotoViewer> {
           filename: 'shutr_$id.jpg',
           title: 'shutr_$id',
         );
+        widget.onDownloaded?.call(id);
         if (mounted) {
           SnackBarHelper.show(context, message: 'Saved to gallery', type: SnackBarType.success);
         }

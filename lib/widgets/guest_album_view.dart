@@ -7,7 +7,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/snackbar_helper.dart';
+import '../utils/gallery_utils.dart';
 import 'remote_photo_viewer.dart';
 
 class AlbumThumbnail extends StatefulWidget {
@@ -93,6 +95,7 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
   bool _loading = true;
   bool _selectionMode = false;
   final Set<String> _selectedIds = {};
+  Set<String> _downloadedIds = {};
 
   String get _albumId => widget.album['id'] as String;
 
@@ -100,6 +103,18 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
   void initState() {
     super.initState();
     _refresh();
+    _loadDownloaded();
+  }
+
+  Future<void> _loadDownloaded() async {
+    final prefs = await SharedPreferences.getInstance();
+    _downloadedIds = (prefs.getStringList('downloaded_photos') ?? []).toSet();
+  }
+
+  Future<void> _markDownloaded(String id) async {
+    _downloadedIds.add(id);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('downloaded_photos', _downloadedIds.toList());
   }
 
   Future<void> _refresh() async {
@@ -139,6 +154,11 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
         .showSnackBar(const SnackBar(content: Text('Uploading...')));
 
     for (var file in files) {
+      final size = await file.length();
+      if (size > 10 * 1024 * 1024) {
+        if (mounted) SnackBarHelper.show(context, message: 'Skipped ${file.name} (over 10MB)', type: SnackBarType.warning);
+        continue;
+      }
       final bytes = await file.readAsBytes();
       if (!mounted) return;
       final encodedName = Uri.encodeComponent(widget.nickname);
@@ -164,7 +184,18 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
         _selectedIds.clear();
       });
 
+  void _selectAll() => setState(() {
+        _selectedIds.addAll(_assets.map((a) => a['id'] as String));
+        _selectionMode = true;
+      });
+
   Future<void> _deleteSelected() async {
+    if (_selectedIds.isEmpty) return;
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (_) => DeleteDialog(count: _selectedIds.length, single: _selectedIds.length == 1),
+    );
+    if (confirm != true) return;
     for (final id in _selectedIds) {
       final asset = _assets.firstWhere((a) => a['id'] == id, orElse: () => null);
       if (asset != null && asset['isLive'] == true) {
@@ -256,6 +287,7 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
           filename: 'shutr_${DateTime.now().millisecondsSinceEpoch}.jpg',
           title: 'shutr_${DateTime.now().millisecondsSinceEpoch}',
         );
+        await _markDownloaded(assetData['id']);
         saved++;
       }
     }
@@ -310,7 +342,29 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
           body: _loading
               ? Center(
                   child: CircularProgressIndicator(color: theme.colorScheme.primary))
-              : _buildGrid(theme),
+              : Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: theme.dividerColor.withValues(alpha: 0.05))),
+                      ),
+                      child: Row(
+                        children: [
+                          Text('${_assets.length} photos',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant, fontWeight: FontWeight.w500)),
+                          const Spacer(),
+                          if (isContributor)
+                            Text('Your contribution: ${widget.uploadCount}/${widget.uploadLimit}',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5))),
+                        ],
+                      ),
+                    ),
+                    Expanded(child: _buildGrid(theme)),
+                  ],
+                ),
           bottomNavigationBar: _selectionMode ? _buildSelectionBar(theme, isContributor) : null,
         );
       },
@@ -334,8 +388,11 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: Row(
                   children: [
-                    Text('${_selectedIds.length} selected',
-                        style: theme.textTheme.bodyMedium),
+                    TextButton(
+                      onPressed: _selectAll,
+                      child: Text('Select All',
+                          style: TextStyle(color: theme.colorScheme.primary)),
+                    ),
                     const Spacer(),
                     TextButton(
                       onPressed: _cancelSelection,
@@ -459,6 +516,20 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
                         : null,
                   ),
                 ),
+              if (!_selectionMode && _downloadedIds.contains(asset['id']))
+                Positioned(
+                  bottom: 4,
+                  right: 4,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.check,
+                        size: 10, color: const Color(0xFF6B8AFF)),
+                  ),
+                ),
             ],
           ),
         );
@@ -474,6 +545,10 @@ class _GuestAlbumViewState extends State<GuestAlbumView> {
           assets: _assets,
           initialIndex: index,
           baseUrl: widget.baseUrl,
+          onDownloaded: (id) {
+            _markDownloaded(id);
+            if (mounted) setState(() {});
+          },
         ),
         transitionsBuilder: (_, animation, __, child) {
           return FadeTransition(
