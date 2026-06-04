@@ -50,3 +50,7 @@ app.*.map.json
 .agents/
 .codex/
 .gemini/
+
+agents.md
+maestro/
+.maestro/
